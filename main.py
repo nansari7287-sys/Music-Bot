@@ -1,9 +1,24 @@
+import os
+import threading
+import yt_dlp
+from flask import Flask
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pytgcalls import PyTgCalls
 from pytgcalls.types import MediaStream
 from pytgcalls.exceptions import NotInCallError
-import yt_dlp
+
+# ==========================================
+# 🌐 DUMMY WEB SERVER (Render Bypass)
+# ==========================================
+app = Flask(__name__)
+@app.route('/')
+def home():
+    return "⚡ Frexxxy Premium Bot is Running 24/7 on Render!"
+
+def run_server():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
 
 # ==========================================
 # ⚙️ CONFIGURATION
@@ -78,7 +93,10 @@ async def button_handler(client, query: CallbackQuery):
             await query.edit_message_text(f"❌ **Error:** `{str(e)}`")
 
 if __name__ == "__main__":
-    print("🔥 Frexxxy Premium Bot Starting on Server...")
+    # Flask Web Server ko background me start karna
+    threading.Thread(target=run_server, daemon=True).start()
+    
+    print("🔥 Frexxxy Premium Bot Starting on Render...")
     bot.start()
     assistant.start()
     call_py.start()
