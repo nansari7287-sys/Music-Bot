@@ -1,4 +1,5 @@
-pyrogram
+pyrogram==2.0.106
 pytgcalls
 yt-dlp
 tgcrypto
+Flask
